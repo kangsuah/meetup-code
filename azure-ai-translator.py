@@ -6,10 +6,10 @@ endpoint = ""
 key = ""
 
 # 2. SAS URL 입력 (스토리지 컨테이너에서 생성한 것)
-# sourceUrl: 파일이 들어있는 컨테이너의 전체 SAS URL
-source_sas_url = ""
-# targetUrl: 번역본을 저장할 컨테이너의 전체 SAS URL
-target_sas_url = ""
+# beforeUrl: 원본 파일이 들어있는 컨테이너의 전체 SAS URL
+before_sas_url = ""
+# afterUrl: 번역본을 저장할 컨테이너의 전체 SAS URL
+after_sas_url = ""
 
 # 3. 요청 URL 구성 (Batch Translation 경로)
 path = "/translator/text/batch/v1.1/batches"
@@ -24,14 +24,14 @@ headers = {
 body = {
     "inputs": [
         {
-            "source": {
-                "sourceUrl": source_sas_url,
+            "before": {
+                "beforeUrl": before_sas_url,
                 "storageSource": "AzureBlob",
                 "language": ""  # 원본 언어(자동 감지 원하면 생략 가능)
             },
-            "targets": [
+            "after": [
                 {
-                    "targetUrl": target_sas_url,
+                    "afterUrl": target_sas_url,
                     "storageSource": "AzureBlob",
                     "category": "general",
                     "language": ""  # 목표 언어
@@ -48,7 +48,7 @@ try:
     if response.status_code == 202:
         print("✅ 작업이 성공적으로 제출되었습니다!")
         print(f"Operation Location: {response.headers.get('Operation-Location')}")
-        print("잠시 후 Azure Storage의 target 컨테이너를 확인해보세요.")
+        print("잠시 후 Azure Storage의 after 컨테이너를 확인해보세요.")
     else:
         print(f"❌ 오류 발생: {response.status_code}")
         print(response.text)

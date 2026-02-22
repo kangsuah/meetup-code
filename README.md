@@ -9,15 +9,17 @@ endpoint = ""
 
 key = ""
 
+
 #2. SAS URL 입력 (스토리지 컨테이너에서 생성한 것)
 
-#beforeUrl: 파일이 들어있는 컨테이너의 전체 SAS URL
+beforeUrl: 파일이 들어있는 컨테이너의 전체 SAS URL
 
 before_sas_url = ""
 
-#afterUrl: 번역본을 저장할 컨테이너의 전체 SAS URL
+afterUrl: 번역본을 저장할 컨테이너의 전체 SAS URL
 
 after_sas_url = ""
+
 
 #4. 헤더 및 본문 구성
 

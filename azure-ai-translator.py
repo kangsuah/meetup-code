@@ -31,7 +31,7 @@ body = {
             },
             "after": [
                 {
-                    "afterUrl": target_sas_url,
+                    "afterUrl": after_sas_url,
                     "storageSource": "AzureBlob",
                     "category": "general",
                     "language": ""  # 목표 언어
@@ -55,3 +55,4 @@ try:
 
 except Exception as e:
     print(f"Error: {e}")
+

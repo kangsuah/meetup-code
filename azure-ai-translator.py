@@ -12,7 +12,7 @@ before_sas_url = ""
 after_sas_url = ""
 
 # 3. 요청 URL 구성 (Batch Translation 경로)
-path = "/translator/text/batch/v1.1/batches"
+path = "translator/text/batch/v1.1/batches"
 constructed_url = endpoint + path
 
 # 4. 헤더 및 본문 구성
@@ -24,17 +24,17 @@ headers = {
 body = {
     "inputs": [
         {
-            "before": {
-                "beforeUrl": before_sas_url,
+            "source": {  
+                "sourceUrl": before_sas_url,
                 "storageSource": "AzureBlob",
-                "language": ""  # 원본 언어(자동 감지 원하면 생략 가능)
+                "language": ""
             },
-            "after": [
+            "targets": [
                 {
-                    "afterUrl": after_sas_url,
+                    "targetUrl": after_sas_url,
                     "storageSource": "AzureBlob",
                     "category": "general",
-                    "language": ""  # 목표 언어
+                    "language": ""
                 }
             ]
         }
@@ -55,4 +55,20 @@ try:
 
 except Exception as e:
     print(f"Error: {e}")
+
+# 5. 전송
+try:
+    response = requests.post(constructed_url, headers=headers, json=body)
+
+    if response.status_code == 202:
+        print("✅ 작업이 성공적으로 제출되었습니다!")
+        print(f"Operation Location: {response.headers.get('Operation-Location')}")
+        print("잠시 후 Azure Storage의 after 컨테이너를 확인해보세요.")
+    else:
+        print(f"❌ 오류 발생: {response.status_code}")
+        print(response.text)
+
+except Exception as e:
+    print(f"Error: {e}")
+
 
